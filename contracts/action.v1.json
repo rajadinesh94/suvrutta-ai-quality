@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Portable synthetic action contract v1",
+  "description": "For adapters; actor is a fixture ID in this reference, never a production auth credential.",
+  "type": "object",
+  "required": ["actor", "tool", "args"],
+  "properties": {
+    "actor": { "type": "string" },
+    "tool": { "enum": ["capture", "save", "retrieve", "consent", "delete"] },
+    "args": { "type": "object" },
+    "fault": { "enum": ["none", "before", "after", "timeout"] }
+  },
+  "additionalProperties": false
+}

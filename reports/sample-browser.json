@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "runId": "browser-20261005T201116006Z-06bc69c3",
+  "timestamp": "2026-10-05T20:11:16.006Z",
+  "target": "independent synthetic reference web target",
+  "mode": "deterministic simulated mock",
+  "selectedProjects": [
+    "chromium",
+    "webkit",
+    "mobile-chromium"
+  ],
+  "command": [
+    "node",
+    "scripts/test-browser.mjs",
+    "--project=chromium",
+    "--project=webkit",
+    "--project=mobile-chromium"
+  ],
+  "versions": {
+    "codeSha256": "5801c98fa4e8457c96747a055a9c926b6159f3e7037ae18a7a0746011e9dddcc",
+    "datasetSha256": "d853bc55e184337ff77a9dc245c74a3b81f868336c91eb0ad9005393528897b5",
+    "scenarioSha256": "ae28a6b42a2790707cb5b3fa53d8527f304831db1b43652abd85a710a7bda38c",
+    "configSha256": "f5552970ed4ed0635e360372f5823734790b4d07e67e59b00b36d437ec234af4",
+    "promptSha256": "48cb5b1919ab7c38fc4b5d4f1cae00e81578658dbd9a43ecc71472768ecfbaa3",
+    "datasetVersion": "development:1.0.0, heldout:1.0.0"
+  },
+  "result": "pass",
+  "exitCode": 0,
+  "failureReason": null,
+  "durationMs": 77843.04,
+  "counts": {
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "runnerDurationMs": 71310.378
+  },
+  "failedTests": [],
+  "usage": {
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "costUsd": 0,
+    "note": "No model call occurred."
+  },
+  "artifacts": [
+    "playwright-results.json",
+    "artifacts/"
+  ],
+  "limitations": [
+    "Reference target only; no private product integration.",
+    "Fixture actor selector does not authenticate users.",
+    "Mobile browser emulation is not a native device test.",
+    "No live model, provider, production service, or human calibration was tested.",
+    "Raw Playwright results and any traces/screenshots remain local and require content review before sharing."
+  ]
+}

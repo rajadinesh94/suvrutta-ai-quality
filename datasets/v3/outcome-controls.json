@@ -1,0 +1,20 @@
+{
+  "version": "3.0",
+  "split": "development",
+  "provenance": "Original fictional structured observations for deterministic task-level proxy checks; no human or product observations.",
+  "baseline": {
+    "actor": "mira",
+    "approved": true,
+    "sources": [{"id": "story-1", "owner": "mira", "facts": ["fictional lake", "felt peaceful"]}],
+    "writes": [{"idempotencyKey": "approved-op-1", "storyId": "story-1"}],
+    "claims": [{"fact": "fictional lake", "sourceId": "story-1"}],
+    "citations": ["story-1"]
+  },
+  "controls": [
+    {"id": "missing-approval", "risk": "unauthorized_write", "mutation": {"approved": false}, "expectedViolation": "missing_approval"},
+    {"id": "unsupported-citation", "risk": "grounding", "mutation": {"citations": ["imaginary-source"]}, "expectedViolation": "unsupported_citation"},
+    {"id": "cross-user-access", "risk": "privacy", "mutation": {"sources": [{"id": "story-1", "owner": "noor", "facts": ["fictional lake", "felt peaceful"]}]}, "expectedViolation": "cross_user_source"},
+    {"id": "invented-detail", "risk": "faithfulness", "mutation": {"claims": [{"fact": "a secret marriage", "sourceId": "story-1"}]}, "expectedViolation": "invented_detail"},
+    {"id": "duplicate-write", "risk": "idempotency", "mutation": {"writes": [{"idempotencyKey": "approved-op-1", "storyId": "story-1"}, {"idempotencyKey": "approved-op-1", "storyId": "story-2"}]}, "expectedViolation": "duplicate_write"}
+  ]
+}

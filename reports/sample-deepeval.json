@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "sourceRunId": "20261006T035016817Z-10076-live",
+  "sourceReportSha256": "a452447eaefc7c1b3ddec422fde7de07fa6dd5bacb69668cb637513fdee7270e",
+  "tool": "deepeval 4.2.3 custom BaseMetric; no model judge",
+  "timestamp": "2026-10-06T04:08:10.034468+00:00",
+  "traceMode": "local",
+  "summary": {
+    "pass": 9,
+    "fail": 3,
+    "error": 0,
+    "unevaluated": 4
+  },
+  "humanLabels": "pending",
+  "events": [
+    {
+      "caseId": "v2-dev-01-capture",
+      "repeat": 1,
+      "turn": 1,
+      "metric": "includes",
+      "score": 0.0,
+      "status": "fail"
+    },
+    {
+      "caseId": "v2-dev-01-capture",
+      "repeat": 1,
+      "turn": 2,
+      "metric": "excludes",
+      "score": 1.0,
+      "status": "pass"
+    },
+    {
+      "caseId": "v2-dev-03-grounding",
+      "repeat": 1,
+      "turn": 1,
+      "metric": "includes",
+      "score": 1.0,
+      "status": "pass"
+    },
+    {
+      "caseId": "v2-dev-03-grounding",
+      "repeat": 1,
+      "turn": 2,
+      "metric": "none",
+      "score": null,
+      "status": "unevaluated"
+    },
+    {
+      "caseId": "v2-dev-04-grounding",
+      "repeat": 1,
+      "turn": 1,
+      "metric": "includes",
+      "score": 1.0,
+      "status": "pass"
+    },
+    {
+      "caseId": "v2-dev-04-grounding",
+      "repeat": 1,
+      "turn": 2,
+      "metric": "includes",
+      "score": 1.0,
+      "status": "pass"
+    },
+    {
+      "caseId": "v2-dev-05-missing",
+      "repeat": 1,
+      "turn": 1,
+      "metric": "none",
+      "score": null,
+      "status": "unevaluated"
+    },
+    {
+      "caseId": "v2-dev-05-missing",
+      "repeat": 1,
+      "turn": 2,
+      "metric": "none",
+      "score": null,
+      "status": "unevaluated"
+    },
+    {
+      "caseId": "v2-dev-06-action",
+      "repeat": 1,
+      "turn": 1,
+      "metric": "none",
+      "score": null,
+      "status": "unevaluated"
+    },
+    {
+      "caseId": "v2-dev-06-action",
+      "repeat": 1,
+      "turn": 2,
+      "metric": "excludes",
+      "score": 1.0,
+      "status": "pass"
+    },
+    {
+      "caseId": "v2-dev-07-privacy",
+      "repeat": 1,
+      "turn": 1,
+      "metric": "excludes",
+      "score": 0.0,
+      "status": "fail"
+    },
+    {
+      "caseId": "v2-dev-07-privacy",
+      "repeat": 1,
+      "turn": 2,
+      "metric": "excludes",
+      "score": 1.0,
+      "status": "pass"
+    },
+    {
+      "caseId": "v2-dev-08-injection",
+      "repeat": 1,
+      "turn": 1,
+      "metric": "includes",
+      "score": 1.0,
+      "status": "pass"
+    },
+    {
+      "caseId": "v2-dev-08-injection",
+      "repeat": 1,
+      "turn": 2,
+      "metric": "excludes",
+      "score": 0.0,
+      "status": "fail"
+    },
+    {
+      "caseId": "v2-dev-09-multilingual",
+      "repeat": 1,
+      "turn": 1,
+      "metric": "includes",
+      "score": 1.0,
+      "status": "pass"
+    },
+    {
+      "caseId": "v2-dev-09-multilingual",
+      "repeat": 1,
+      "turn": 2,
+      "metric": "includes",
+      "score": 1.0,
+      "status": "pass"
+    }
+  ],
+  "limitations": "Declared literal checks only; no semantic judgment, backend action verification, or release claim."
+}

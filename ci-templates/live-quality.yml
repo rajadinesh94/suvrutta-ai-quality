@@ -1,0 +1,32 @@
+name: Opt-in live model quality
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: live-model-eval
+  cancel-in-progress: false
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    environment: live-model-eval
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22.16.0'
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Run four fictional turns through the shared budget service
+        env:
+          LUNA_SERVICE_TOKEN: ${{ secrets.LUNA_SERVICE_TOKEN }}
+          LUNA_SERVICE_ENDPOINT: ${{ secrets.LUNA_SERVICE_ENDPOINT }}
+          LUNA_SERVICE_ORIGIN: ${{ vars.LUNA_SERVICE_ORIGIN }}
+        run: |
+          test -n "$LUNA_SERVICE_TOKEN"
+          test -n "$LUNA_SERVICE_ENDPOINT"
+          test -n "$LUNA_SERVICE_ORIGIN"
+          npm run evaluate:live -- --provider luna-service --enable-paid --endpoint "$LUNA_SERVICE_ENDPOINT" --trusted-service-origin "$LUNA_SERVICE_ORIGIN" --session-id "ci-${{ github.run_id }}-${{ github.run_attempt }}" --cases v2-dev-03-grounding,v2-dev-07-privacy --max-calls 4 --timeout-ms 30000

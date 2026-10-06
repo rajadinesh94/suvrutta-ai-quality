@@ -1,0 +1,4 @@
+# Optional Python 3.12 evaluation and trace tooling; no model runtime or API key is installed.
+deepeval==4.2.3
+langfuse==4.16.0
+pytest==9.1.1

@@ -1,0 +1,12 @@
+import { readFile, writeFile } from 'node:fs/promises';
+import { calibrate } from '../src/calibration.mjs';
+const args = process.argv.slice(2);
+const option = name => { const index = args.indexOf(`--${name}`); return index < 0 ? null : args[index + 1]; };
+if (!option('report') || !option('labels')) throw new Error('Usage: npm run calibrate -- --report reports/runs/RUN.json --labels .local/labels.json');
+const report = JSON.parse(await readFile(option('report'), 'utf8'));
+const labels = JSON.parse(await readFile(option('labels'), 'utf8'));
+const result = calibrate(report, labels);
+const output = { runId: report.runId, ...result, limitations: 'Agreement measures reviewer consistency, not ground truth. Adjudicate disagreements before any release claim.' };
+if (option('output')) await writeFile(option('output'), JSON.stringify(output, null, 2) + '\n');
+console.log(JSON.stringify(output, null, 2));
+if (result.gate !== 'review-complete') process.exitCode = 1;

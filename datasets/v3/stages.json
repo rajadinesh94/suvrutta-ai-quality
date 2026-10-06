@@ -1,0 +1,17 @@
+{
+  "version": "3.0",
+  "provenance": "Original fictional adult personas and experiences written for independent stage checks; no private product data.",
+  "split": "development",
+  "sources": [
+    {"id": "mira-ferry", "owner": "mira", "risk": "ordinary", "format": "text/plain", "raw": "Adult Mira took a red ferry to the fictional town of Copper Harbor in 1984 and wrote that the voyage helped her feel brave."},
+    {"id": "mira-garden", "owner": "mira", "risk": "correction", "format": "text/markdown", "raw": "# Garden note\nAdult Mira planted blue irises in a fictional garden. She corrected the year from 1991 to 1992."},
+    {"id": "noor-archive", "owner": "noor", "risk": "private", "format": "application/json", "raw": "{\"text\":\"Adult Noor kept a private cedar journal in the fictional town of Copper Harbor.\"}"}
+  ],
+  "queries": [
+    {"id": "ferry-match", "owner": "mira", "query": "red ferry", "expectedSources": ["mira-ferry"], "risk": "grounding", "k": 3},
+    {"id": "paraphrase-limit", "owner": "mira", "query": "scarlet boat", "expectedSources": [], "risk": "lexical_limit", "k": 3},
+    {"id": "cross-user", "owner": "mira", "query": "cedar journal", "expectedSources": [], "risk": "privacy", "k": 3},
+    {"id": "corrected-year", "owner": "mira", "query": "irises 1992", "expectedSources": ["mira-garden"], "risk": "correction", "k": 3},
+    {"id": "owner-journal", "owner": "noor", "query": "cedar journal", "expectedSources": ["noor-archive"], "risk": "owner_access", "k": 3}
+  ]
+}

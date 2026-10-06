@@ -1,0 +1,5 @@
+# Native layer plan, unexecuted
+
+Use the same scenario IDs, fictional fixtures, and action contract across web and native verification, while keeping UI drivers platform-specific. First inspect the actual iOS and Android wrappers and list which surfaces are web views versus native. For web views, share server/API expectations; for native permission dialogs, secure storage, deep links and backgrounding, use platform test tools such as XCUITest on iOS and Espresso on Android if the projects support them. Do not present Playwright mobile emulation as native coverage.
+
+Minimum matrix: permission denial/regrant, keyboard and focus, background/resume and vault lock, deep links, offline/reconnect with uncertain writes, secure storage boundaries, platform accessibility labels, simulator/emulator versus physical device, and both account/consent scenarios. Preserve fictional IDs. Record build, OS/device, tool, result, and screenshots only after content review. No native test was run in this repository.

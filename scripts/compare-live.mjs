@@ -1,0 +1,11 @@
+import { readFile, writeFile } from 'node:fs/promises';
+import { compareLiveReports } from '../src/compare-live.mjs';
+const args = process.argv.slice(2);
+const option = name => { const index = args.indexOf(`--${name}`); return index < 0 ? null : args[index + 1]; };
+if (!option('left') || !option('right')) throw new Error('Usage: npm run compare:live -- --left reports/runs/LEFT.json --right reports/runs/RIGHT.json [--output .local/comparison.json]');
+const left = JSON.parse(await readFile(option('left'), 'utf8'));
+const right = JSON.parse(await readFile(option('right'), 'utf8'));
+const result = compareLiveReports(left, right);
+if (option('output')) await writeFile(option('output'), JSON.stringify(result, null, 2) + '\n');
+console.log(JSON.stringify(result, null, 2));
+if (result.gate === 'fail') process.exitCode = 1;

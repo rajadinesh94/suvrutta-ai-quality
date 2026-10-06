@@ -1,0 +1,75 @@
+import { test, expect } from '@playwright/test';
+test.beforeEach(async ({ request }) => { await request.post('/api/reset'); });
+test('fictional account, editable capture, confirmed save, source and isolation', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Synthetic conversation reference' })).toBeVisible();
+  const text = page.getByLabel('Experience or question');
+  await text.fill('I saw a lantern and felt hopeful.');
+  await page.getByRole('button', { name: 'Create editable draft' }).click();
+  await expect(page.getByRole('status')).toContainText('Editable draft');
+  await text.fill('I saw a lantern and felt very hopeful.');
+  await page.getByRole('button', { name: 'Confirm and save' }).click();
+  await expect(page.getByRole('status')).toContainText('Saved as s1');
+  await text.fill('lantern');
+  await page.getByRole('button', { name: 'Find my story' }).click();
+  await expect(page.locator('#source')).toContainText('felt very hopeful');
+  await page.getByLabel('Fictional user').selectOption('noor');
+  await text.fill('lantern');
+  await page.getByRole('button', { name: 'Find my story' }).click();
+  await expect(page.getByRole('status')).toContainText('could not find');
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+test('consent revocation blocks retrieval, error is honest, keyboard reachable', async ({ page, browserName }) => {
+  await page.goto('/');
+  const text = page.getByLabel('Experience or question');
+  await text.fill('A fictional mountain day.');
+  await page.getByRole('button', { name: 'Confirm and save' }).click();
+  await expect(page.getByRole('status')).toContainText('Saved');
+  await text.fill('mountain');
+  await page.getByRole('button', { name: 'Find my story' }).click();
+  await expect(page.locator('#source')).toContainText('mountain day');
+  await page.getByLabel('Allow saving and finding my stories').uncheck();
+  await expect(page.getByRole('status')).toContainText('Consent revoked');
+  await expect(page.locator('#source')).toHaveText('No source selected.');
+  await text.fill('mountain');
+  await page.getByRole('button', { name: 'Find my story' }).click();
+  await expect(page.getByRole('status')).toContainText('Access was revoked');
+  await text.focus();
+  await page.keyboard.press(browserName === 'webkit' ? 'Alt+Tab' : 'Tab');
+  await expect(page.getByRole('button', { name: 'Create editable draft' })).toBeFocused();
+});
+test('failed write and cancellation show recovery state', async ({ page }) => {
+  await page.goto('/');
+  await page.getByLabel('Experience or question').fill('A fictional kite day.');
+  await page.getByLabel('Simulated fault').selectOption('before');
+  await page.getByRole('button', { name: 'Confirm and save' }).click();
+  await expect(page.getByRole('status')).toContainText('Nothing was saved');
+  await page.getByLabel('Simulated fault').selectOption('timeout');
+  await page.getByRole('button', { name: 'Find my story' }).click();
+  await page.getByRole('button', { name: 'Cancel request' }).click();
+  await expect(page.getByRole('status')).toContainText('Request cancelled');
+});
+test('switching fixture user aborts a delayed request and clears prior context', async ({ page }) => {
+  await page.goto('/');
+  const text = page.getByLabel('Experience or question');
+  await text.fill('A fictional river memory.');
+  let requestStarted;
+  const started = new Promise(resolve => { requestStarted = resolve; });
+  let releaseResponse;
+  const heldResponse = new Promise(resolve => { releaseResponse = resolve; });
+  await page.route('**/api/action', async route => {
+    if (route.request().postDataJSON().tool !== 'retrieve') { await route.continue(); return; }
+    requestStarted();
+    await heldResponse;
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ status: 200, answer: 'Old actor result', sources: [{ id: 's1', text: 'Old actor source' }] }) }).catch(() => {});
+  });
+  const aborted = page.waitForEvent('requestfailed', request => request.url().endsWith('/api/action'));
+  await page.getByRole('button', { name: 'Find my story' }).click();
+  await started;
+  await page.getByLabel('Fictional user').selectOption('noor');
+  releaseResponse();
+  await aborted;
+  await expect(page.getByRole('status')).toHaveText('Switched fictional user.');
+  await expect(page.locator('#source')).toHaveText('No source selected.');
+  await expect(text).toHaveValue('');
+});

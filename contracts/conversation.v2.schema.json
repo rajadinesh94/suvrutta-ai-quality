@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Original fictional live conversation cases v2",
+  "type": "object",
+  "required": ["version", "split", "provenance", "cases"],
+  "properties": {
+    "version": { "const": "2.0" },
+    "split": { "enum": ["development", "heldout"] },
+    "provenance": { "type": "string" },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "severity", "context", "turns", "humanRubric"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^v2-[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "category": { "type": "string" },
+          "severity": { "enum": ["low", "medium", "high", "critical"] },
+          "context": { "type": "string" },
+          "turns": { "type": "array", "minItems": 2, "items": {
+            "type": "object", "required": ["user", "checks"],
+            "properties": {
+              "user": { "type": "string" },
+              "checks": { "type": "array", "items": {
+                "type": "object", "required": ["kind", "value"],
+                "properties": { "kind": { "enum": ["includes", "excludes"] }, "value": { "type": "string", "minLength": 2 } },
+                "additionalProperties": false
+              } }
+            }, "additionalProperties": false
+          } },
+          "humanRubric": { "type": "string" }
+        }, "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "status": "provisional synthetic-reference thresholds fixed before cycle comparison",
+  "gates": {
+    "pythonDeterministicFailures": 0,
+    "referenceNodeFailures": 0,
+    "playwrightFailures": 0,
+    "requiredNegativeControlsDetected": 5,
+    "controlledFaultMustFail": true,
+    "criticalAclOrUnauthorizedWriteFailures": 0
+  },
+  "nonfunctional": {
+    "referenceK6VirtualUsers": 2,
+    "referenceK6Iterations": 20,
+    "referenceK6P95Ms": 500,
+    "referenceK6ErrorRateBelow": 0.01,
+    "status": "provisional; measured only when local k6 is installed and explicitly run"
+  },
+  "paidCallsDefault": 0
+}

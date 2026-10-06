@@ -1,0 +1,15 @@
+# Decisions and current limits
+
+- **Live suite:** V2 adds original fictional multi-turn cases and an opt-in bounded loopback adapter. It is separate from the deterministic v1 reference and does not imply private product coverage.
+- **Scoring:** Literal checks catch only specified facts or strings. Human semantic labels and agreement remain pending; no LLM judge is presented as ground truth. A critical literal failure blocks the live gate.
+- **Observed endpoint:** A local on-device model responded to 16 fictional turns in a bounded sample. The checked-in redacted report records four literal passes, three failures, and one case without literal checks, including two critical failures. This is endpoint evidence only, not application or release evidence.
+- **Paid calls:** A paid service path is disabled unless explicitly enabled. No paid call, secret, or billing configuration is present in this repository.
+- **Evaluation frameworks:** Python 3.12, pytest 9.1.1, DeepEval 4.2.3 and Langfuse SDK 4.16.0 are pinned at the top level. The checked-in DeepEval sample used custom deterministic metrics and no judge. Local Langfuse Compose started six containers and passed health; a synthetic SDK export completed, but API read-back did not verify ingestion before disk pressure stopped the stack. Local observability runtime state is excluded from publication.
+
+- **Runtime:** Node 22.16+ is required because Node 20 reached end of life; see [official release status](https://nodejs.org/en/about/previous-releases).
+- **Runner:** Node's built-in `node:test` and a small deterministic evaluator keep CI local, fast and free. [Node test runner documentation](https://nodejs.org/api/test.html) supports this maintained choice. A semantic model-judge framework is deferred until a real model output and human labels justify it.
+- **Browser runner:** Pinned Playwright 1.57.0 tests Chromium, Firefox, WebKit and one mobile-browser profile. The local cached browser builds match this pin. The current npm registry reported a newer release on 6 October 2026, so routine dependency review should update the pin and browser binaries after regression testing. See [official Playwright CI guidance](https://playwright.dev/docs/ci) and [browser compatibility](https://playwright.dev/docs/browsers).
+- **Reference only:** Fictional actor IDs are fixtures. The target intentionally has no authentication, durable storage, provider, or encryption. Reusing this server with real people would violate its documented boundary.
+- **Cost:** No hosted provider, model download, credential, payment method or recurring job is configured. A private application may choose a model only after approval and measured safety/quality/cost results.
+- **Consent negative control:** A test-only engine option bypasses the retrieve gate, causing the paired case to fail. CI requires the defect to be caught. The server never enables this option.
+- **Sharing:** This reviewed source snapshot is published independently; local history and raw artifacts are excluded.

@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "target": "Suvrutta public accessible UI surface; authenticated fixture supplied by the private product repository",
+  "notice": "Names below describe UI controls only. They convey no source code, secrets, private prompts, or real archive data.",
+  "selectors": {
+    "openChat": { "role": "button", "name": "Chat with Luna" },
+    "chatHeading": { "role": "heading", "name": "Talk with Luna." },
+    "modelConsent": { "role": "checkbox", "name": "I allow this new chat to be processed by OpenAI." },
+    "message": { "role": "textbox", "name": "Message Luna" },
+    "send": { "role": "button", "name": "Send to Luna ↗" },
+    "cancel": { "role": "button", "name": "Cancel response" },
+    "retry": { "role": "button", "name": "Try again" },
+    "newChat": { "role": "button", "name": "New chat" },
+    "prepareDraft": { "role": "button", "name": "Prepare editable draft from my words" },
+    "storyTitle": { "role": "textbox", "name": "Story title" },
+    "storyText": { "role": "textbox", "name": "Story text" },
+    "approveSave": { "role": "button", "name": "Approve and save story" },
+    "discardDraft": { "role": "button", "name": "Discard draft" },
+    "localSearchConsent": { "role": "checkbox", "name": "Allow local search of my unlocked saved stories" },
+    "localSearch": { "role": "textbox", "name": "Search my saved stories" },
+    "searchStories": { "role": "button", "name": "Search saved stories" },
+    "refreshSources": { "role": "button", "name": "Refresh sources" },
+    "sourceCitation": { "role": "button", "namePattern": "^Open source: " }
+  },
+  "fixture": {
+    "syntheticActors": ["A", "B"],
+    "authAuthority": "private product fixture",
+    "inferenceDefault": "blocked; deterministic route substitutes must be explicitly configured",
+    "localReferencePort": 4186
+  }
+}

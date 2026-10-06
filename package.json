@@ -1,0 +1,32 @@
+{
+  "name": "suvrutta-ai-quality",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "evaluate": "node scripts/evaluate.mjs",
+    "evaluate:live": "node scripts/evaluate-live.mjs",
+    "compare:live": "node scripts/compare-live.mjs",
+    "evaluate:deepeval": "node scripts/run-deepeval.mjs",
+    "test:deepeval": "node scripts/run-deepeval.mjs --test",
+    "trace:langfuse": "node scripts/export-langfuse.mjs",
+    "calibrate": "node scripts/calibrate.mjs",
+    "negative-control": "node scripts/evaluate.mjs --negative-control",
+    "test:e2e": "node scripts/test-browser.mjs",
+    "test:product": "node scripts/test-product.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "cycle": "node scripts/run-quality-cycle.mjs",
+    "check": "npm test && npm run evaluate && npm run negative-control && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.57.0",
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3"
+  }
+}
